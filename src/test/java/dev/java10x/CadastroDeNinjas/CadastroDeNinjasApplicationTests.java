@@ -9,5 +9,4 @@ class CadastroDeNinjasApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
