@@ -1,32 +1,17 @@
 package dev.java10x.CadastroDeNinjas.Missoes;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.java10x.CadastroDeNinjas.Ninja.NinjaModel;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 import java.util.List;
 
-@Entity
-@Table(name = "tb_missoes")
 @AllArgsConstructor
 @NoArgsConstructor
-public class MissoesModel {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class MissoesDTO {
     private Long id;
-
-    @Column(name = "nome")
     private String nome;
-
-    @Column(name = "dificuldade")
     private String dificuldade;
-
-    @OneToMany(mappedBy = "missoes")
-    @JsonIgnore
     private List<NinjaModel> ninjas;
 
     public Long getId() {
@@ -60,6 +45,4 @@ public class MissoesModel {
     public void setNinjas(List<NinjaModel> ninjas) {
         this.ninjas = ninjas;
     }
-
-
 }

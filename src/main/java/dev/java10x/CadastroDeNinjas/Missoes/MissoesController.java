@@ -25,13 +25,13 @@ public class MissoesController {
     }
 
     @PostMapping("/criar")
-    public MissoesModel criarMissao(@RequestBody MissoesModel missao){
+    public MissoesDTO criarMissao(@RequestBody MissoesDTO missao){
         return missoesService.criarMissao(missao);
     }
 
-    @PutMapping ("/alterar")
-    public String alterarMissao(){
-        return "Missao alterada com sucesso!" ;
+    @PutMapping ("/alterar/{id}")
+    public MissoesModel alterarMissao(@PathVariable Long id, @RequestBody MissoesModel missaoAtualizada){
+        return missoesService.alterarMissao(id, missaoAtualizada);
     }
 
     @DeleteMapping("/deletar/{id}")
