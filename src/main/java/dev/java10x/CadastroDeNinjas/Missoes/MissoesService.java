@@ -1,6 +1,5 @@
 package dev.java10x.CadastroDeNinjas.Missoes;
 
-import dev.java10x.CadastroDeNinjas.Ninja.NinjaModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +9,11 @@ import java.util.Optional;
 public class MissoesService {
 
     private MissoesRepository missoesRepository;
+    private MissoesMapper missoesMapper;
 
-    public MissoesService(MissoesRepository missoesRepository) {
+    public MissoesService(MissoesRepository missoesRepository, MissoesMapper missoesMapper) {
         this.missoesRepository = missoesRepository;
+        this.missoesMapper = missoesMapper;
     }
 
     public List<MissoesModel> listarMissoes(){
@@ -24,8 +25,18 @@ public class MissoesService {
         return missaoPorId.orElse(null);
     }
 
-    public MissoesModel criarMissao (MissoesModel missao){
-        return missoesRepository.save(missao);
+    public MissoesDTO criarMissao (MissoesDTO missoesDTO){
+        MissoesModel missao = missoesMapper.map(missoesDTO);
+        missao = missoesRepository.save(missao);
+        return missoesMapper.map(missao);
+    }
+
+    public MissoesModel alterarMissao(Long id, MissoesModel missaoAtualizada){
+        if(missoesRepository.existsById(id)){
+            missaoAtualizada.setId(id);
+            return missoesRepository.save(missaoAtualizada);
+        }
+        return null;
     }
 
     public void deletarMissaoPorId (Long id){
