@@ -36,7 +36,7 @@ public class NinjaController {
             return ResponseEntity.ok(ninja);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Ninja com o id: " + id + "não existe nos nosso registros");
+                    .body("Ninja com o id: " + id + " não existe nos nosso registros");
         }
     }
 
@@ -59,7 +59,7 @@ public class NinjaController {
                     .body("Ninja com o ID " + id + " deletado com sucesso");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Ninja com o ID " + id + " não econtrado");
+                    .body("Ninja com o id " + id + " não existe nos nossos registros");
         }
     }
 }
