@@ -22,6 +22,7 @@ Gerenciamento de missões e dos ninjas associados a elas.
 * Maven: Para build e gerenciamento de dependências do projeto.
 * Docker: Para build externo do banco de dados
 * SQL: Manipulação do banco de dados
+  
 
 ### Design do Banco de Dados
 O esquema do banco de dados segue as seguintes relações:
@@ -29,6 +30,7 @@ O esquema do banco de dados segue as seguintes relações:
 * Ninja: Contém atributos como id, nome, idade, email e rank.
 * Missão: Contém atributos como id, título e descrição.
 * Um Ninja pode ter apenas uma Missão, mas uma Missão pode ser atribuída a vários Ninjas.
+  
 
 ### Configuração
 
