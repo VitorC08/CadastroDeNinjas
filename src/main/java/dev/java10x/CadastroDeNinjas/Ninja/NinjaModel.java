@@ -4,12 +4,14 @@ import dev.java10x.CadastroDeNinjas.Missoes.MissoesModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 
 @Entity
 @Table(name = "tb_cadastro")
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "missoes")
 public class NinjaModel {
 
      @Id

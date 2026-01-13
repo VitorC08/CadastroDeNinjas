@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Ninja</title>
+    <!-- Ideal: mover todo CSS para /css/styles.css depois -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #1e1e2e;
+            color: #e6e6e6;
+            line-height: 1.6;
+            padding: 24px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 32px;
+            font-weight: 600;
+            color: #f0f0f0;
+            font-size: 1.8rem;
+        }
+
+        .form-container {
+            background: #252536;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            padding: 28px;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .mensagem {
+            color: #66bb6a;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 500;
+            background: rgba(102, 187, 106, 0.1);
+            padding: 8px;
+            border-radius: 6px;
+        }
+
+        label {
+            display: block;
+            margin: 16px 0 6px;
+            font-weight: 500;
+            color: #a0b3d0;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #3a3a4a;
+            background: #2a2a3a;
+            color: #e6e6e6;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #4a6fa5;
+            box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 6px;
+            background-color: #4a6fa5;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #3d5a80;
+            transform: translateY(-2px);
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+            color: #4a6fa5;
+            font-weight: 500;
+            transition: color 0.2s;
+            width: 100%;
+        }
+
+        a:hover {
+            color: #6a90c0;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h1>Adicionar Novo Ninja</h1>
+
+<div class="form-container">
+    <div th:if="${mensagem}" class="mensagem" th:text="${mensagem}"></div>
+
+    <form th:action="@{/ninjas/ui/salvar}" th:object="${ninja}" method="post">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" th:field="*{nome}" required />
+
+        <label for="email">Email</label>
+        <input type="email" id="email" th:field="*{email}" required />
+
+        <label for="imgUrl">URL da Imagem</label>
+        <input type="text" id="imgUrl" th:field="*{imgUrl}" required />
+
+        <label for="idade">Idade</label>
+        <input type="number" id="idade" th:field="*{idade}" min="1" required />
+
+        <label for="rank">Rank</label>
+        <input type="text" id="rank" th:field="*{rank}" placeholder="Ex: Chunin, Jonin..." />
+
+        <button type="submit">Cadastrar Ninja</button>
+    </form>
+
+    <a th:href="@{/ninjas/ui/listar}">Voltar para a lista de ninjas</a>
+</div>
+</body>
+</html>
