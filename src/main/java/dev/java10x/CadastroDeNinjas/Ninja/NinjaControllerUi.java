@@ -2,8 +2,8 @@ package dev.java10x.CadastroDeNinjas.Ninja;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -23,4 +23,35 @@ public class NinjaControllerUi {
         model.addAttribute("ninjas", ninjas);
         return "listarNinjas";
     }
+
+    @GetMapping("/listar/{id}")
+    public String listarNinjasPorId(@PathVariable Long id, Model model){
+        NinjaDTO ninja = ninjaService.listarNinjasPorId(id);
+        if (ninja != null){
+            model.addAttribute("ninja", ninja);
+            return "detalhesNinja";
+        } else {
+            model.addAttribute("mensagem", "ninja não encontrado");
+            return "listarNinjas";
+        }
+    }
+
+    @GetMapping("/deletar/{id}")
+    public String deletarNinjaPorId(@PathVariable Long id){
+       ninjaService.deletarNinjaPorId(id);
+       return "redirect:/ninjas/ui/listar";
+    }
+
+   @GetMapping("/adicionar")
+    public String exibirFormularioAdicionarNinjas(Model model){
+        model.addAttribute("ninja", new NinjaDTO());
+        return "adicionarNinja";
+   }
+
+   @PostMapping("/salvar")
+    public String salvarNinjas(@ModelAttribute NinjaDTO ninja, RedirectAttributes redirectAttributes){
+        ninjaService.criarNinja(ninja);
+        redirectAttributes.addFlashAttribute("mensagem", "Ninja cadastrado com sucesso!");
+        return "redirect:/ninjas/ui/listar";
+   }
 }

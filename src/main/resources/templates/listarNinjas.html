@@ -1,38 +1,223 @@
-<!
-<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tabela de Ninjas</title>
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #1e1e2e; /* Cinza escuro elegante */
+            color: #e6e6e6;
+            line-height: 1.6;
+            padding: 24px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 28px;
+            font-weight: 600;
+            color: #f0f0f0;
+            font-size: 1.8rem;
+        }
+
+        /* Botões */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 6px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn--primary {
+            background-color: #4a6fa5; /* Azul acinzentado suave */
+            color: white;
+        }
+
+        .btn--primary:hover {
+            background-color: #3d5a80;
+            transform: translateY(-2px);
+        }
+
+        .btn--danger {
+            background-color: #b03939;
+            color: white;
+        }
+
+        .btn--danger:hover {
+            background-color: #8a2c2c;
+            transform: translateY(-2px);
+        }
+
+        .btn--outline {
+            background: transparent;
+            border: 1px solid #4a6fa5;
+            color: #a0b3d0;
+        }
+
+        .btn--outline:hover {
+            background: rgba(74, 111, 165, 0.1);
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Tabela */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #252536;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2d2d44;
+            color: #c5c5d5;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        tr:nth-child(even) {
+            background-color: #2a2a3a;
+        }
+
+        tr:hover {
+            background-color: #303045;
+        }
+
+        img {
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border: 2px solid #4a6fa5;
+        }
+
+        /* Ações (última coluna) */
+        .actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .actions a {
+            margin: 0;
+        }
+
+        /* Responsividade básica */
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            tr {
+                margin-bottom: 20px;
+                padding: 16px;
+                border: 1px solid #333;
+                border-radius: 8px;
+            }
+
+            td {
+                position: relative;
+                padding-left: 50% !important;
+                text-align: right;
+            }
+
+            td:before {
+                content: attr(data-label) ": ";
+                position: absolute;
+                left: 16px;
+                width: 45%;
+                font-weight: bold;
+                color: #a0b3d0;
+                text-align: left;
+            }
+
+            .actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
 </head>
 <body>
-<h1>Lista de Ninjas</h1>
-<table>
-    <thead>
-       <tr>
-           <th>imagem</th>
-           <th>Id</th>
-           <th>Nome</th>
-           <th>Idade</th>
-           <th>Email</th>
-           <th>Rank</th>
-           <th>Missoes</th>
-       </tr>
-    </thead>
+<div class="container">
+    <h1>Lista de Ninjas</h1>
+    <a href="#" class="btn btn--primary" th:href="@{/ninjas/ui/adicionar}">Adicionar Novo Ninja</a>
 
-    <tbody>
-        <tr th:each = "ninja: ${ninjas}">
-            <td><img th:src="${ninja.imgUrl}"></td>
-            <td th:text="${ninja.id}"></td>
-            <td th:text="${ninja.nome}"></td>
-            <td th:text="${ninja.idade}"></td>
-            <td th:text="${ninja.email}"></td>
-            <td th:text="${ninja.rank}"></td>
-            <td th:text="${ninja.missoes}"></td>
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Imagem</th>
+            <th>Nome</th>
+            <th>Idade</th>
+            <th>Email</th>
+            <th>Rank</th>
+            <th>Missões</th>
+            <th>Ações</th>
         </tr>
-    </tbody>
-
-</table>
-
+        </thead>
+        <tbody>
+        <tr th:each="ninja : ${ninjas}">
+            <td data-label="ID" th:text="${ninja.id}"></td>
+            <td data-label="Imagem">
+                <img th:src="${ninja.imgUrl}" alt="Foto do ninja">
+            </td>
+            <td data-label="Nome" th:text="${ninja.nome}"></td>
+            <td data-label="Idade" th:text="${ninja.idade}"></td>
+            <td data-label="Email" th:text="${ninja.email}"></td>
+            <td data-label="Rank" th:text="${ninja.rank}"></td>
+            <td data-label="Missões">
+                        <span th:if="${ninja.missoes}">
+                            <span th:text="${ninja.missoes.nome}"></span>, Dificuldade:
+                            <span th:text="${ninja.missoes.dificuldade}"></span>
+                        </span>
+                <span th:if="${ninja.missoes == null}">Sem missões</span>
+            </td>
+            <td data-label="Ações" class="actions">
+                <a class="btn btn--outline" th:href="@{/ninjas/ui/listar/{id}(id=${ninja.id})}">Ver</a>
+                <a class="btn btn--primary" th:href="@{/ninjas/ui/#/{id}(id=${ninja.id})}">Editar</a>
+                <a class="btn btn--danger" th:href="@{/ninjas/ui/deletar/{id}(id=${ninja.id})}">Excluir</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
